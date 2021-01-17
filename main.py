@@ -1,16 +1,24 @@
-# This is a sample Python script.
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+from flask import Flask, request, jsonify,render_template,make_response
+
+from flask_cors import CORS
+import json
+
+app = Flask(__name__)
+CORS(app)
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+@app.route('/login', methods=['GET', 'POST'])
+def add_message():
+    if request.environ.get('HTTP_X_FORWARDED_FOR') is None:
+        print(request.environ['REMOTE_ADDR'])
+    else:
+        print(request.environ['HTTP_X_FORWARDED_FOR'])
+    p = json.loads(request.get_data().decode("utf-8"))
+    p = json.loads(request.get_data())
+    print(p['password'])
+    return make_response({'log':'1','pas':'3'})
 
 
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    app.run()
